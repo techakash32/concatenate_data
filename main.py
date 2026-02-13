@@ -39,3 +39,13 @@ x_test_transformed = np.concatenate((x_test_age , x_test_sex , x_test_smoker_reg
 
 print(x_train_transformed.shape)
 print(x_test_transformed.shape)
+
+from sklearn.compose import ColumnTransformer
+
+transformer = ColumnTransformer(transformers=[
+('tnf2',OrdinalEncoder(categories=[['female', 'male']]), ['sex']),
+('tnf3',OneHotEncoder(sparse_output=False, drop='first'), ['smoker','region'])
+],remainder='passthrough')
+
+print(transformer.fit_transform(x_train).shape)
+print(transformer.transform(x_test).shape)
